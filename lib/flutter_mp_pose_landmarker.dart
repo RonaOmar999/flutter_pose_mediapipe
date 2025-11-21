@@ -17,6 +17,15 @@ class PoseLandmarkPoint {
     required this.visibility,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'x': x,
+      'y': y,
+      'z': z,
+      'visibility': visibility,
+    };
+  }
+
   factory PoseLandmarkPoint.fromJson(Map<String, dynamic> json) {
     return PoseLandmarkPoint(
       x: json['x'].toDouble(),
