@@ -21,6 +21,7 @@ import io.flutter.plugin.common.EventChannel
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicReference
 
+
 class CameraManager(private val activity: Activity) : PoseLandmarkerHelper.LandmarkerListener {
 
     data class Landmark(
