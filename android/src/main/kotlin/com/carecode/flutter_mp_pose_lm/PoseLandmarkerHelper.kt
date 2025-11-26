@@ -2,7 +2,7 @@
  * Copyright 2023 The TensorFlow Authors. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
+ * You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
  *       http://www.apache.org/licenses/LICENSE-2.0
@@ -152,6 +152,22 @@ class PoseLandmarkerHelper(
         }
     }
 
+    // ------------------------------
+    // New method to dynamically update delegate, model, and detection confidence
+    fun updateConfig(
+        delegate: Int? = null,
+        model: Int? = null,
+        minPoseDetectionConfidence: Float? = null
+    ) {
+        delegate?.let { currentDelegate = it }
+        model?.let { currentModel = it }
+        minPoseDetectionConfidence?.let { this.minPoseDetectionConfidence = it }
+
+        clearPoseLandmarker()
+        setupPoseLandmarker()
+    }
+    // ------------------------------
+
     // Convert the ImageProxy to MP Image and feed it to PoselandmakerHelper.
     fun detectLiveStream(imageProxy: ImageProxy, isFrontCamera: Boolean) {
         if (runningMode != RunningMode.LIVE_STREAM) {
@@ -260,7 +276,7 @@ class PoseLandmarkerHelper(
                     poseLandmarker?.detectForVideo(mpImage, timestampMs)
                         ?.let { detectionResult ->
                             resultList.add(detectionResult)
-                        } ?: {
+                        } ?: run {
                         didErrorOccurred = true
                         poseLandmarkerHelperListener?.onError(
                             "ResultBundle could not be returned" +

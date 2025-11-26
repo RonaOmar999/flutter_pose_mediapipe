@@ -1,27 +1,29 @@
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mp_pose_landmarker/flutter_mp_pose_landmarker.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       // showPerformanceOverlay: true,
       title: 'Popup Example',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: PoseLandmarkerView(),
+      home: const PoseLandmarkerView(),
     );
   }
 }
 
-
 class PoseLandmarkerView extends StatefulWidget {
+  const PoseLandmarkerView({super.key});
+
   @override
   State<PoseLandmarkerView> createState() => _PoseLandmarkerViewState();
 }
@@ -33,7 +35,7 @@ class _PoseLandmarkerViewState extends State<PoseLandmarkerView> {
   @override
   void initState() {
     super.initState();
-    PoseLandmarker.setConfig(delegate: 0 , model: 1);
+    PoseLandmarker.setConfig(delegate: 0, model: 1);
     _poseSubscription = PoseLandmarker.poseLandmarkStream.listen((pose) {
       setState(() {
         _landmarks = pose.landmarks;
@@ -49,16 +51,17 @@ class _PoseLandmarkerViewState extends State<PoseLandmarkerView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(bottomNavigationBar: FloatingActionButton(
-  child: Icon(Icons.cameraswitch),
-  onPressed: () {
-    PoseLandmarker.switchCamera();
-  },
-),
+    return Scaffold(
+      bottomNavigationBar: FloatingActionButton(
+        child: const Icon(Icons.cameraswitch),
+        onPressed: () {
+          PoseLandmarker.switchCamera();
+        },
+      ),
       body: Stack(
         fit: StackFit.expand,
         children: [
-          NativeCameraPreview(),
+          const NativeCameraPreview(),
           // Positioned square in top-right
           Positioned(
             top: 16,
@@ -82,7 +85,7 @@ class _PoseLandmarkerViewState extends State<PoseLandmarkerView> {
 }
 
 class NativeCameraPreview extends StatelessWidget {
-  const NativeCameraPreview({Key? key}) : super(key: key);
+  const NativeCameraPreview({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -100,15 +103,35 @@ class LandmarkPainter extends CustomPainter {
   LandmarkPainter(this.landmarks);
 
   static const List<List<int>> connections = [
-    [0, 1], [1, 2], [2, 3], [3, 7],
-    [0, 4], [4, 5], [5, 6], [6, 8],
-    [9, 10], [11, 12],
-    [11, 13], [13, 15], [12, 14], [14, 16],
-    [11, 23], [12, 24], [23, 24],
-    [23, 25], [25, 27], [24, 26], [26, 28],
-    [27, 31], [28, 32],
-    [15, 17], [16, 18], [17, 19], [18, 20],
-    [19, 21], [20, 22],
+    [0, 1],
+    [1, 2],
+    [2, 3],
+    [3, 7],
+    [0, 4],
+    [4, 5],
+    [5, 6],
+    [6, 8],
+    [9, 10],
+    [11, 12],
+    [11, 13],
+    [13, 15],
+    [12, 14],
+    [14, 16],
+    [11, 23],
+    [12, 24],
+    [23, 24],
+    [23, 25],
+    [25, 27],
+    [24, 26],
+    [26, 28],
+    [27, 31],
+    [28, 32],
+    [15, 17],
+    [16, 18],
+    [17, 19],
+    [18, 20],
+    [19, 21],
+    [20, 22],
   ];
 
   @override
@@ -146,5 +169,3 @@ class LandmarkPainter extends CustomPainter {
   bool shouldRepaint(covariant LandmarkPainter old) =>
       old.landmarks != landmarks;
 }
-
-
