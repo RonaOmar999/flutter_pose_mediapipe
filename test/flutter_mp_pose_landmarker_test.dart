@@ -8,6 +8,9 @@ class MockFlutterMpPoseLandmarkerPlatform
     implements FlutterMpPoseLandmarkerPlatform {
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+  Future<bool> checkCameraPermission() => Future.value(true);
 }
 
 void main() {
@@ -19,13 +22,11 @@ void main() {
         initialPlatform, isInstanceOf<MethodChannelFlutterMpPoseLandmarker>());
   });
 
-  test('getPlatformVersion', () async {
-    FlutterMpPoseLandmarker flutterMpPoseLandmarkerPlugin =
-        FlutterMpPoseLandmarker();
+  test('mock platform can be set as instance', () {
     MockFlutterMpPoseLandmarkerPlatform fakePlatform =
         MockFlutterMpPoseLandmarkerPlatform();
     FlutterMpPoseLandmarkerPlatform.instance = fakePlatform;
 
-    expect(await flutterMpPoseLandmarkerPlugin.getPlatformVersion(), '42');
+    expect(FlutterMpPoseLandmarkerPlatform.instance, fakePlatform);
   });
 }

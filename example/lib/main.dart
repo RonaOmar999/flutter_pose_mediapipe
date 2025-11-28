@@ -35,6 +35,13 @@ class PoseLandmarkerView extends StatefulWidget {
 }
 
 class _PoseLandmarkerViewState extends State<PoseLandmarkerView> {
+  int delegate = 0; // 0=CPU, 1=GPU
+  int model = 2; // 0=Full, 1=Lite, 2=Heavy
+  // Confidence parameters
+  double _minPoseDetectionConfidence = 0.5;
+  double _minPoseTrackingConfidence = 0.5;
+  double _minPosePresenceConfidence = 0.5;
+
   List<PoseLandmarkPoint> _landmarks = [];
   late StreamSubscription<PoseLandMarker> _poseSubscription;
 
@@ -45,11 +52,6 @@ class _PoseLandmarkerViewState extends State<PoseLandmarkerView> {
   int _fps = 0;
   int _frameCount = 0;
   int _lastTimestamp = DateTime.now().millisecondsSinceEpoch;
-
-  // Confidence parameters
-  double _minPoseDetectionConfidence = 0.5;
-  double _minPoseTrackingConfidence = 0.5;
-  double _minPosePresenceConfidence = 0.5;
 
   final _detectionController = TextEditingController();
   final _trackingController = TextEditingController();
@@ -64,8 +66,8 @@ class _PoseLandmarkerViewState extends State<PoseLandmarkerView> {
     _presenceController.text = _minPosePresenceConfidence.toString();
 
     PoseLandmarker.setConfig(
-      delegate: 0,
-      model: 1,
+      delegate: delegate,
+      model: model,
       minPoseDetectionConfidence: _minPoseDetectionConfidence,
       minPoseTrackingConfidence: _minPoseTrackingConfidence,
       minPosePresenceConfidence: _minPosePresenceConfidence,
@@ -122,8 +124,8 @@ class _PoseLandmarkerViewState extends State<PoseLandmarkerView> {
           double.tryParse(_presenceController.text) ?? 0.5;
 
       PoseLandmarker.setConfig(
-        delegate: 0,
-        model: 1,
+        delegate: delegate,
+        model: model,
         minPoseDetectionConfidence: _minPoseDetectionConfidence,
         minPoseTrackingConfidence: _minPoseTrackingConfidence,
         minPosePresenceConfidence: _minPosePresenceConfidence,
