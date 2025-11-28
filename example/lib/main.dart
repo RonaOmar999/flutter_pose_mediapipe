@@ -36,7 +36,7 @@ class PoseLandmarkerView extends StatefulWidget {
 
 class _PoseLandmarkerViewState extends State<PoseLandmarkerView> {
   int delegate = 0; // 0=CPU, 1=GPU
-  int model = 2; // 0=Full, 1=Lite, 2=Heavy
+  int model = 1; // 0=Full, 1=Lite, 2=Heavy
   // Confidence parameters
   double _minPoseDetectionConfidence = 0.5;
   double _minPoseTrackingConfidence = 0.5;
